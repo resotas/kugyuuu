@@ -1,67 +1,70 @@
 import React, { useState } from 'react';
-import './App.css';
 
-const App = () => {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
+function App() {
+  const [userMessage, setUserMessage] = useState(''); // ユーザーの入力
+  const [chatReply, setChatReply] = useState(''); // AIからの返信
+  const [error, setError] = useState(''); // エラーメッセージ
 
-  const generateReply = async (userInput) => {
+  // API呼び出し関数
+  const sendMessage = async () => {
+    if (!userMessage.trim()) {
+      setError('メッセージを入力してください');
+      return;
+    }
+
     try {
-      const response = await fetch('/api/chat', { // サーバーレス関数を呼び出す
+      setError(''); // エラーをリセット
+      const response = await fetch('https://kugyuuu.vercel.app/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userInput }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: userMessage }),
       });
 
       if (!response.ok) {
-        throw new Error('サーバーエラー');
+        throw new Error('サーバーエラーが発生しました');
       }
 
       const data = await response.json();
-      return data.reply || 'エラーが発生しました。もう一度試してください。';
+      setChatReply(data.reply); // AIの返信をセット
+      setUserMessage(''); // 入力をクリア
     } catch (error) {
-      console.error('APIエラー:', error);
-      return 'サーバーエラーが発生しました。';
+      setError(error.message);
     }
   };
 
-  const handleSend = async () => {
-    if (!input.trim()) return;
-
-    const userMessage = { text: input, sender: 'user' };
-    setMessages([...messages, userMessage]);
-
-    const aiReply = await generateReply(input);
-    const aiMessage = { text: aiReply, sender: 'ai' };
-    setMessages((prevMessages) => [...prevMessages, aiMessage]);
-
-    setInput('');
-  };
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>釘宮理恵チャット</h1>
-        <p>ツンデレ彼女と会話しましょう</p>
-      </header>
-      <div className="chat-window">
-        {messages.map((msg, index) => (
-          <div key={index} className={`message ${msg.sender}`}>
-            {msg.text}
-          </div>
-        ))}
-      </div>
-      <div className="input-area">
+    <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
+      <h1>釘宮理恵チャット</h1>
+      <p>ツンデレ彼女と会話を楽しみましょう！</p>
+
+      {/* ユーザー入力フォーム */}
+      <div style={{ marginBottom: '20px' }}>
         <input
           type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
+          value={userMessage}
+          onChange={(e) => setUserMessage(e.target.value)}
           placeholder="メッセージを入力..."
+          style={{ width: '300px', padding: '10px', marginRight: '10px' }}
         />
-        <button onClick={handleSend}>送信</button>
+        <button onClick={sendMessage} style={{ padding: '10px 20px', cursor: 'pointer' }}>
+          送信
+        </button>
       </div>
+
+      {/* エラーメッセージ表示 */}
+      {error && <p style={{ color: 'red' }}>エラー: {error}</p>}
+
+      {/* AIからの返信表示 */}
+      {chatReply && (
+        <div style={{ border: '1px solid #ddd', padding: '10px', marginTop: '20px' }}>
+          <strong>AIの返信:</strong>
+          <p>{chatReply}</p>
+        </div>
+      )}
     </div>
   );
-};
+}
 
 export default App;
