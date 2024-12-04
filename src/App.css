@@ -8,13 +8,12 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  overflow: hidden; /* 縦横の余白をなくす */
 }
 
 .chat-container {
   background-color: white;
-  width: 100vw; /* スマートフォンの横幅に合わせる */
-  height: 100vh; /* 画面の高さを占有 */
+  width: 100vw; /* 横幅をスマートフォンに合わせる */
+  height: 100vh; /* 画面全体を覆う */
   max-width: 480px; /* 最大幅を指定 */
   display: flex;
   flex-direction: column;
@@ -39,6 +38,8 @@ body {
   padding: 10px;
   overflow-y: auto;
   background-color: #f7f7f7;
+  display: flex;
+  flex-direction: column;
 }
 
 /* メッセージのスタイル */
@@ -85,6 +86,9 @@ body {
   padding: 10px;
   background-color: #ffffff;
   border-top: 1px solid #ddd;
+  position: sticky; /* 入力フォームを画面下に固定 */
+  bottom: 0; /* 画面下端に配置 */
+  box-sizing: border-box; /* 余白を含めて計算 */
 }
 
 .chat-input input {
