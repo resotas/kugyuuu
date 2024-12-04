@@ -1,13 +1,12 @@
 import { Configuration, OpenAIApi } from 'openai';
 
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY, // 環境変数からAPIキーを取得
+  apiKey: process.env.OPENAI_API_KEY, // Vercelに設定した環境変数からAPIキーを取得
 });
 
 const openai = new OpenAIApi(configuration);
 
 export default async function handler(req, res) {
-  // POSTリクエスト以外の場合のエラーハンドリング
   if (req.method !== 'POST') {
 	res.status(405).json({ error: 'Method not allowed' });
 	return;
@@ -16,13 +15,12 @@ export default async function handler(req, res) {
   try {
 	const { message } = req.body;
 
-	// メッセージが空の場合のエラー
 	if (!message || message.trim() === '') {
 	  res.status(400).json({ error: 'Message is required' });
 	  return;
 	}
 
-	// OpenAI APIリクエスト
+	// OpenAI APIにリクエストを送信
 	const response = await openai.createChatCompletion({
 	  model: 'gpt-3.5-turbo',
 	  messages: [
@@ -31,12 +29,13 @@ export default async function handler(req, res) {
 	  ],
 	});
 
-	// 成功レスポンス
+	// 成功時のレスポンス
 	res.status(200).json({ reply: response.data.choices[0].message.content });
   } catch (error) {
+	// エラー内容をログに出力
 	console.error('Error with OpenAI API:', error.response ? error.response.data : error.message);
 
-	// エラーレスポンス
+	// 500エラーを返す
 	res.status(500).json({
 	  error: 'Internal server error',
 	  details: error.response ? error.response.data : error.message,
