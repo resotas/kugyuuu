@@ -2,22 +2,40 @@ import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [messages, setMessages] = useState([]); // 初期メッセージを削除
+  const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState('');
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (!userMessage.trim()) return;
 
+    // ユーザーのメッセージを追加
     setMessages([...messages, { id: messages.length + 1, sender: 'user', text: userMessage }]);
     setUserMessage('');
 
-    // AIの応答をモックデータで追加（API呼び出しを追加する場合はここで処理）
-    setTimeout(() => {
+    try {
+      // API呼び出し
+      const response = await fetch('https://kugyuuu.vercel.app/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: userMessage }),
+      });
+
+      if (!response.ok) {
+        throw new Error('サーバーエラーが発生しました');
+      }
+
+      const data = await response.json();
+
+      // AIのメッセージを追加
       setMessages((prev) => [
         ...prev,
-        { id: prev.length + 1, sender: 'ai', text: 'それ、すっごく気になるんだけど！' },
+        { id: prev.length + 1, sender: 'ai', text: data.reply },
       ]);
-    }, 1000);
+    } catch (error) {
+      console.error('APIエラー:', error.message);
+    }
   };
 
   return (
