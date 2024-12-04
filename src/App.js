@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [messages, setMessages] = useState([
-    { id: 1, sender: 'ai', text: 'こんにちは！何を話したい？' },
-    { id: 2, sender: 'user', text: 'こんにちは！' },
-  ]);
+  const [messages, setMessages] = useState([]); // 初期メッセージを削除
   const [userMessage, setUserMessage] = useState('');
 
   const sendMessage = () => {
@@ -13,8 +10,14 @@ function App() {
 
     setMessages([...messages, { id: messages.length + 1, sender: 'user', text: userMessage }]);
     setUserMessage('');
-    
-    // ここにAPI呼び出しを追加し、AIの応答を追加します
+
+    // AIの応答をモックデータで追加（API呼び出しを追加する場合はここで処理）
+    setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        { id: prev.length + 1, sender: 'ai', text: 'それ、すっごく気になるんだけど！' },
+      ]);
+    }, 1000);
   };
 
   return (
