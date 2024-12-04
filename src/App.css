@@ -8,13 +8,14 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  overflow: hidden; /* 縦横の余白をなくす */
 }
 
 .chat-container {
   background-color: white;
-  width: 100%; /* 横幅をスマートフォンに合わせる */
-  max-width: 480px; /* 横幅の最大サイズ */
-  height: 100vh;
+  width: 100vw; /* スマートフォンの横幅に合わせる */
+  height: 100vh; /* 画面の高さを占有 */
+  max-width: 480px; /* 最大幅を指定 */
   display: flex;
   flex-direction: column;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
