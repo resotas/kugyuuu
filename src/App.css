@@ -1,74 +1,100 @@
 /* ベーススタイル */
 body {
-  background-color: #f9f9f9;
-  font-family: Arial, sans-serif;
+  background-color: #ffe8e8; /* 明るいピンク背景 */
+  font-family: 'Comic Sans MS', cursive, Arial, sans-serif; /* 手書き風フォント */
   margin: 0;
   padding: 0;
+  color: #444;
 }
 
 h1 {
-  color: #333;
+  color: #ff7b7b; /* ピンク系の見出し色 */
   text-align: center;
   margin-top: 20px;
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* ふんわりした影 */
 }
 
 p {
   text-align: center;
   color: #666;
+  font-size: 1.2rem;
 }
 
+/* メインコンテナ */
 div {
   text-align: center;
+  padding: 20px;
 }
 
+/* ユーザー入力フィールド */
 input {
-  width: 80%; /* スマートフォンで画面幅を考慮 */
-  max-width: 300px; /* 大きすぎないように制限 */
+  width: 80%;
+  max-width: 300px;
   padding: 10px;
   margin: 10px auto;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
+  border: 2px solid #ffcccc; /* ピンクの枠線 */
+  border-radius: 20px; /* 角丸 */
+  font-size: 1rem;
+  background-color: #fffafa; /* 薄いピンク */
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); /* ソフトシャドウ */
   display: block;
 }
 
+input:focus {
+  outline: none;
+  border-color: #ff7b7b; /* アクティブ時の枠色 */
+  box-shadow: 0 0 8px rgba(255, 123, 123, 0.5); /* 光るような影 */
+}
+
+/* 送信ボタン */
 button {
-  width: 80%; /* ボタンの幅を調整 */
-  max-width: 150px; /* 大きすぎないように制限 */
-  background-color: #007bff;
+  width: 80%;
+  max-width: 150px;
+  background-color: #ff7b7b; /* ピンクのボタン */
   color: white;
   padding: 10px;
   border: none;
-  border-radius: 4px;
-  font-size: 16px;
+  border-radius: 20px; /* 角丸 */
+  font-size: 1rem;
   cursor: pointer;
   display: block;
   margin: 0 auto;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); /* ソフトシャドウ */
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #ff5050; /* ホバー時の色 */
+  transform: scale(1.05); /* 少し拡大 */
 }
 
+button:active {
+  transform: scale(0.95); /* 押したときの縮小 */
+}
+
+/* エラーメッセージ */
 .error-message {
-  color: red;
-  font-size: 14px;
+  color: #ff5050;
+  font-size: 0.9rem;
   margin-top: 10px;
 }
 
+/* AIからの返信ボックス */
 .reply-box {
   margin: 20px auto;
   padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #fff;
+  border: 2px solid #ffcccc; /* ピンクの枠線 */
+  border-radius: 15px;
+  background-color: #fffafa; /* 薄いピンク */
   width: 80%;
   max-width: 400px;
   text-align: left;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* ソフトシャドウ */
 }
 
 .reply-box strong {
-  color: #333;
+  color: #ff7b7b;
   display: block;
   margin-bottom: 5px;
 }
