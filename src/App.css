@@ -1,140 +1,118 @@
 /* ベーススタイル */
 body {
-  background-color: #ffe8e8; /* 明るいピンク背景 */
-  font-family: 'Comic Sans MS', cursive, Arial, sans-serif; /* 手書き風フォント */
   margin: 0;
   padding: 0;
-  color: #444;
+  font-family: Arial, sans-serif;
+  background-color: #e5ddd5; /* LINEのような淡い背景色 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
-h1 {
-  color: #ff7b7b; /* ピンク系の見出し色 */
-  text-align: center;
-  margin-top: 20px;
-  font-size: 2.5rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* ふんわりした影 */
+.chat-container {
+  background-color: white;
+  width: 100%;
+  max-width: 500px;
+  height: 100vh; /* スマートフォン画面全体を覆う */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 軽い影 */
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-p {
-  text-align: center;
-  color: #666;
-  font-size: 1.2rem;
-}
-
-/* メインコンテナ */
-div {
-  text-align: center;
-  padding: 20px;
-}
-
-/* ユーザー入力フィールド */
-input {
-  width: 80%;
-  max-width: 300px;
-  padding: 10px;
-  margin: 10px auto;
-  border: 2px solid #ffcccc; /* ピンクの枠線 */
-  border-radius: 20px; /* 角丸 */
-  font-size: 1rem;
-  background-color: #fffafa; /* 薄いピンク */
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); /* ソフトシャドウ */
-  display: block;
-}
-
-input:focus {
-  outline: none;
-  border-color: #ff7b7b; /* アクティブ時の枠色 */
-  box-shadow: 0 0 8px rgba(255, 123, 123, 0.5); /* 光るような影 */
-}
-
-/* 送信ボタン */
-button {
-  width: 80%;
-  max-width: 150px;
-  background-color: #ff7b7b; /* ピンクのボタン */
+/* ヘッダー */
+.chat-header {
+  background-color: #00b900; /* LINE風の緑色 */
   color: white;
+  text-align: center;
   padding: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* チャットエリア */
+.chat-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: #f7f7f7; /* メッセージエリアの背景 */
+}
+
+/* メッセージのスタイル */
+.message {
+  margin: 5px 0;
+  display: flex;
+  align-items: flex-end;
+}
+
+/* ユーザーのメッセージ */
+.message.user {
+  justify-content: flex-end; /* 自分のメッセージは右寄せ */
+}
+
+.message.user .bubble {
+  background-color: #00b900;
+  color: white;
+  align-self: flex-end;
+}
+
+/* AIのメッセージ */
+.message.ai {
+  justify-content: flex-start; /* 相手のメッセージは左寄せ */
+}
+
+.message.ai .bubble {
+  background-color: #ffffff;
+  color: black;
+  border: 1px solid #ddd;
+}
+
+/* メッセージバブルのスタイル */
+.bubble {
+  max-width: 70%; /* メッセージバブルの幅 */
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 軽い影 */
+  word-wrap: break-word;
+}
+
+/* 入力エリア */
+.chat-input {
+  display: flex;
+  padding: 10px;
+  background-color: #ffffff;
+  border-top: 1px solid #ddd;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 1rem;
+  margin-right: 10px;
+  outline: none;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chat-input button {
+  background-color: #00b900;
+  color: white;
   border: none;
-  border-radius: 20px; /* 角丸 */
+  border-radius: 20px;
+  padding: 10px 20px;
   font-size: 1rem;
   cursor: pointer;
-  display: block;
-  margin: 0 auto;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); /* ソフトシャドウ */
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease;
 }
 
-button:hover {
-  background-color: #ff5050; /* ホバー時の色 */
-  transform: scale(1.05); /* 少し拡大 */
+.chat-input button:hover {
+  background-color: #009900;
 }
 
-button:active {
-  transform: scale(0.95); /* 押したときの縮小 */
-}
-
-/* エラーメッセージ */
-.error-message {
-  color: #ff5050;
-  font-size: 0.9rem;
-  margin-top: 10px;
-}
-
-/* AIからの返信ボックス */
-.reply-box {
-  margin: 20px auto;
-  padding: 15px;
-  border: 2px solid #ffcccc; /* ピンクの枠線 */
-  border-radius: 15px;
-  background-color: #fffafa; /* 薄いピンク */
-  width: 80%;
-  max-width: 400px;
-  text-align: left;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* ソフトシャドウ */
-}
-
-.reply-box strong {
-  color: #ff7b7b;
-  display: block;
-  margin-bottom: 5px;
-}
-
-.reply-box p {
-  margin: 0;
-  color: #555;
-}
-
-/* レスポンシブ対応 */
-@media (max-width: 768px) {
-  input, button {
-    width: 90%; /* スマートフォンでは幅をさらに広げる */
-  }
-
-  .reply-box {
-    width: 90%;
-  }
-}
-
-@media (max-width: 480px) {
-  body {
-    font-size: 14px; /* スマホでは全体的に文字サイズを少し小さく */
-  }
-
-  h1 {
-    font-size: 20px;
-  }
-
-  input {
-    font-size: 14px;
-    padding: 8px;
-  }
-
-  button {
-    font-size: 14px;
-    padding: 8px;
-  }
-
-  .reply-box {
-    font-size: 14px;
-  }
+.chat-input button:active {
+  background-color: #007a00;
 }
